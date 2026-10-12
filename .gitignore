@@ -1,0 +1,5 @@
+# служебные файлы дизайн-процесса и локальные бэкапы — в шаблон не входят
+.impeccable/
+*.bak
+content.json.bak
+.zcodeignore

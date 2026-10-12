@@ -1,0 +1,125 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# русский интерфейс админки
+locale: ru
+
+# загруженные фото складываются в images/ и в контент пишутся как "images/файл.jpg"
+media_folder: "images"
+public_folder: "images"
+
+# имена загружаемых файлов — латиницей
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+# публиковать изменения сразу (без черновиков — так проще владельцу)
+publish_mode: simple
+
+collections:
+  - name: content
+    label: Контент сайта
+    files:
+      - name: content
+        label: Контент сайта
+        label_singular: Контент сайта
+        file: "content.json"
+        format: json
+        fields:
+
+          - label: "Название сауны"
+            name: name
+            widget: string
+            hint: "Показывается в шапке, в заголовке и в подвале сайта"
+
+          - label: "Слоган"
+            name: tagline
+            widget: text
+            hint: "Одна фраза под заголовком: чем берёт ваша сауна"
+
+          - label: "Адрес"
+            name: address
+            widget: string
+            hint: "В формате: Город, улица и дом — например, Тверь, ул. Озёрная, 12"
+
+          - label: "Телефон"
+            name: phone
+            widget: string
+            hint: "В любом читаемом виде, например +7 903 123-45-67"
+
+          - label: "Telegram менеджера"
+            name: telegram
+            widget: string
+            hint: "Юзернейм без @ — сюда будут приходить заявки на бронь"
+
+          - label: "Группа ВКонтакте"
+            name: vk
+            widget: string
+            required: false
+            hint: "Полная ссылка, например https://vk.com/your_club"
+
+          - label: "Часы работы"
+            name: hours
+            widget: object
+            fields:
+              - { label: "Открытие", name: from, widget: string, hint: "Например 09:00" }
+              - { label: "Закрытие", name: to, widget: string, hint: "Работаете после полуночи? Пишите меньше открытия — например 03:00" }
+
+          - label: "Максимум гостей за раз"
+            name: capacity
+            widget: number
+            value_type: int
+            min: 1
+            max: 200
+
+          - label: "Приближение карты"
+            name: mapZoom
+            widget: number
+            value_type: int
+            min: 1
+            max: 20
+            default: 16
+            required: false
+            hint: "1 — вся страна, 16 — улицы и дома (обычно подходит)"
+
+          - label: "Залы и цены"
+            name: halls
+            label_singular: "Зал"
+            widget: list
+            add: "Добавить зал"
+            fields:
+              - { label: "Название зала", name: name, widget: string }
+              - { label: "Цена за час, ₽", name: pricePerHour, widget: number, value_type: int, min: 0 }
+              - { label: "Короткое описание", name: note, widget: string, required: false, hint: "Например: просторный зал, до 10 гостей" }
+
+          - label: "Дополнительные услуги"
+            name: extras
+            label_singular: "Услуга"
+            widget: list
+            add: "Добавить услугу"
+            hint: "Показываются в «Банном меню» и в форме брони"
+            fields:
+              - { label: "Название", name: name, widget: string }
+              - { label: "Цена за визит, ₽", name: price, widget: number, value_type: int, min: 0 }
+
+          - label: "Особенности"
+            name: features
+            label_singular: "Особенность"
+            widget: list
+            add: "Добавить особенность"
+            hint: "Коротко: Финская парная, Купель, Парковка… Иконка подберётся по смыслу"
+
+          - label: "Фотографии"
+            name: photos
+            label_singular: "Фотография"
+            widget: list
+            add: "Добавить фото"
+            hint: "Первое фото — главное: оно стоит в шапке сайта и уходит в соцсети"
+            field:
+              label: "Фото"
+              name: photo
+              widget: image
+              media_library:
+                config:
+                  max_file_size: 4000000

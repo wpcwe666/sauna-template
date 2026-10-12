@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Админка — редактирование сайта</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%231D1712"/><path d="M20 44V28l12-6 12 6v16" fill="none" stroke="%23F4EDE1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'>
+</head>
+<body>
+<!-- Виджет входа Netlify Identity: его же подтверждает ссылку из пригласительного письма -->
+<script src="https://unpkg.com/netlify-identity-widget@1/build/netlify-identity-widget.js"></script>
+<!-- Decap CMS: сама админка. Интерфейс — русский (locale: ru в config.yml) -->
+<script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>
